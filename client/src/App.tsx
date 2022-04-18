@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './App.css'
 import { ChakraProvider, extendTheme, Flex, Heading, Text, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper} from '@chakra-ui/react'
 import { Container } from '@chakra-ui/react'
@@ -15,7 +15,13 @@ const tempData = {
     yAxis: [100, 150, 180, 210, 240, 350],
 }
 
+const tempFutureInvestmentValue = 8500.00
+
 function App() {
+    const [initialSavingsAmount, setInitialSavingsAmount] = useState(0)
+    const [monthlyDeposit, setMonthlyDeposit] = useState(0)
+    const [interestRate, setInterestRate] = useState(0)
+
     return (
         <ChakraProvider theme={defaultTheme}>
             <DefaultLayout>
@@ -33,13 +39,15 @@ function App() {
                 </Container>
                 <Flex>
                     <Flex>
-                        <Text>Savings Amount</Text>
+                        <Text>Initial Deposit</Text>
                         <NumberInput 
-                            defaultValue={0} 
+                            defaultValue={0}
+                            value={initialSavingsAmount}
+                            onChange={(value => setInitialSavingsAmount(parseInt(value)))}
                             min={0}
-                            step={1000} 
-                            label="Savings Amount"
-                            name="savingsAmount"
+                            step={100} 
+                            label="Initial Deposit"
+                            name="initialDeposit"
                             size='sm' 
                             maxW={20}
                         >
@@ -54,6 +62,8 @@ function App() {
                         <Text>Monthly Deposit</Text>
                         <NumberInput 
                             defaultValue={0} 
+                            value={monthlyDeposit}
+                            onChange={(value => setMonthlyDeposit(parseInt(value)))}
                             min={0}
                             step={100} 
                             label="Monthly Deposit"
@@ -71,13 +81,14 @@ function App() {
                     <Flex>
                         <Text>Interest Rate</Text>
                         <NumberInput
+                                defaultValue={0}
+                                value={interestRate}
+                                onChange={(value => setInterestRate(parseFloat(value)))}
                                 label="Interest Rate"
                                 name="interestRare"
-                                placeholder="100"
-                                defaultValue={0} 
                                 precision={2} 
                                 min={0}
-                                step={0.1}
+                                step={0.5}
                                 size='sm' 
                                 maxW={20}
                             >
@@ -89,6 +100,7 @@ function App() {
                         </NumberInput> 
                     </Flex>
                 </Flex>
+                <Text>Future Investment Value: {tempFutureInvestmentValue}</Text>
             </DefaultLayout>
         </ChakraProvider>
     )
