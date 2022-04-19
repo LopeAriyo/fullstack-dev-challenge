@@ -18,9 +18,9 @@ const tempData = {
 const tempFutureInvestmentValue = 8500.00
 
 function App() {
-    const [initialSavingsAmount, setInitialSavingsAmount] = useState(0)
+    const [initialDeposit, setInitialDeposit] = useState(0)
     const [monthlyDeposit, setMonthlyDeposit] = useState(0)
-    const [interestRate, setInterestRate] = useState(0)
+    const [interestRatePercentage, setInterestRatePercentage] = useState(0)
 
     return (
         <ChakraProvider theme={defaultTheme}>
@@ -42,8 +42,8 @@ function App() {
                         <Text>Initial Deposit</Text>
                         <NumberInput 
                             defaultValue={0}
-                            value={initialSavingsAmount}
-                            onChange={(value => setInitialSavingsAmount(parseInt(value)))}
+                            value={initialDeposit}
+                            onChange={(value => setInitialDeposit(parseInt(value)))}
                             min={0}
                             step={100} 
                             label="Initial Deposit"
@@ -79,13 +79,13 @@ function App() {
                         </NumberInput>
                     </Flex>
                     <Flex>
-                        <Text>Interest Rate</Text>
+                        <Text>Interest Rate (%)</Text>
                         <NumberInput
                                 defaultValue={0}
-                                value={interestRate}
-                                onChange={(value => setInterestRate(parseFloat(value)))}
+                                value={interestRatePercentage}
+                                onChange={(value => setInterestRatePercentage(parseFloat(value)))}
                                 label="Interest Rate"
-                                name="interestRare"
+                                name="interestRate"
                                 precision={2} 
                                 min={0}
                                 step={0.5}
