@@ -1,16 +1,20 @@
 {
   "name": "fullstack-dev-challenge",
   "version": "0.0.1",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "express": "4.17.1"
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server/server.ts",
     "types": "tsc",
+    "server": "nodemon server/server.ts",
+    "install:server": "cd server && yarn install && cd ..",
+    "test:server": "cd server && yarn test && cd ..",
     "client": "node scripts/start-client.js",
-    "install": "cd client && yarn install && cd .."
+    "install:client": "cd client && yarn install && cd ..",
+    "test:client": "cd client && yarn test && cd .."
   },
   "devDependencies": {
     "concurrently": "5.3.0",
