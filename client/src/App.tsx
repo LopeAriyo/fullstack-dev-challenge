@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './App.css'
 import { ChakraProvider, extendTheme, Flex, Heading, Text, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper} from '@chakra-ui/react'
 import { Container } from '@chakra-ui/react'
@@ -15,12 +15,32 @@ const tempData = {
     yAxis: [100, 150, 180, 210, 240, 350],
 }
 
-const tempFutureInvestmentValue = 8500.00
-
 function App() {
-    const [initialDeposit, setInitialDeposit] = useState(0)
-    const [monthlyDeposit, setMonthlyDeposit] = useState(0)
-    const [interestRatePercentage, setInterestRatePercentage] = useState(0)
+
+    const [requestBody, setRequestBody] = useState({
+        initialDeposit: 0,
+        monthlyDeposit: 0,
+        ratePercentage: 0.00,
+    })
+
+    const [futureInvestmentValue, setFutureInvestmentValue] = useState(0)
+
+    useEffect(() => {
+
+        fetch('http://localhost:3001/api/savings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestBody),
+        }).then(async (res) => {
+            let data = await res.json()
+            requestBody.monthlyDeposit > 0 && requestBody.ratePercentage > 0 && setFutureInvestmentValue(data)
+        }).catch ((error => console.log(error)))
+    }, [requestBody])
+
+    const handleChange = (name: string, value: number) => {
+        setRequestBody({...requestBody,
+            [name]: value 
+    })}
 
     return (
         <ChakraProvider theme={defaultTheme}>
@@ -42,8 +62,8 @@ function App() {
                         <Text>Initial Deposit</Text>
                         <NumberInput 
                             defaultValue={0}
-                            value={initialDeposit}
-                            onChange={(value => setInitialDeposit(parseInt(value)))}
+                            value={requestBody.initialDeposit}
+                            onChange={(value) => handleChange("initialDeposit", parseInt(value))}
                             min={0}
                             step={100} 
                             name="initialDeposit"
@@ -61,8 +81,8 @@ function App() {
                         <Text>Monthly Deposit</Text>
                         <NumberInput 
                             defaultValue={0} 
-                            value={monthlyDeposit}
-                            onChange={(value => setMonthlyDeposit(parseInt(value)))}
+                            value={requestBody.monthlyDeposit}
+                            onChange={(value) => handleChange("monthlyDeposit", parseInt(value))}
                             min={0}
                             step={100} 
                             name="monthlyDeposit"
@@ -80,9 +100,9 @@ function App() {
                         <Text>Interest Rate (%)</Text>
                         <NumberInput
                                 defaultValue={0}
-                                value={interestRatePercentage}
-                                onChange={(value => setInterestRatePercentage(parseFloat(value)))}
-                                name="interestRate"
+                                value={requestBody.ratePercentage}
+                                onChange={(value) => handleChange("ratePercentage", parseFloat(value))}
+                                name="ratePercentage"
                                 precision={2} 
                                 min={0}
                                 step={0.5}
@@ -97,7 +117,7 @@ function App() {
                         </NumberInput> 
                     </Flex>
                 </Flex>
-                <Text>Future Investment Value: {tempFutureInvestmentValue}</Text>
+                <Text>Future investment value in 50 years: £{(futureInvestmentValue).toFixed(2)}</Text>
             </DefaultLayout>
         </ChakraProvider>
     )
