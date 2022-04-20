@@ -26,14 +26,21 @@ app.post("/api/savings", (req, res) => {
     res.status(400).send({error: validation.error.details[0].message})
     return
   }
+
+  const projection = []
+
   const rateDecimal = ratePercentage/100;
-  const time = 50 *12;
+  const time = 50
 
-  let compoundInterest = Math.pow(1+ rateDecimal, time)
+  for (let year = 0; year <= time; year++){
 
-  const savings = (monthlyDeposit * compoundInterest - monthlyDeposit)/rateDecimal + initialDeposit*compoundInterest;
+    const compoundInterest = Math.pow(1+ rateDecimal, year * 12)
+    const balance = (monthlyDeposit * compoundInterest - monthlyDeposit)/rateDecimal + initialDeposit*compoundInterest
 
-  res.send(savings.toFixed(2))
+    projection.push({"year": year, "balance": parseFloat(balance.toFixed(2))})
+  }
+
+  res.send(projection)
 });
 
 app.all("/*", (req, res, next) => {

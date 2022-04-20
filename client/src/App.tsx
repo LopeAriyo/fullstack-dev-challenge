@@ -5,17 +5,22 @@ import { Container } from '@chakra-ui/react'
 import DefaultLayout from './components/layouts/Default'
 import LineChart from './components/LineChart'
 import theme from './theme'
+import * as yup from 'yup';
 
 const defaultTheme = extendTheme(theme)
 
-// Note: This is just for example purposes
-// should be replaced with real data from the server
-const tempData = {
-    xAxis: [0, 1, 2, 3, 4, 5],
-    yAxis: [100, 150, 180, 210, 240, 350],
-}
-
 function App() {
+
+    const requestBodySchema = yup.object().shape({
+        initialDeposit: yup.number().positive(),
+        monthlyDeposit: yup.number(),
+        ratePercentage: yup.number().positive().required()
+      })
+
+    const [chartData, setChartData] = useState({
+        xAxis: [],
+        yAxis: [],
+    })
 
     const [requestBody, setRequestBody] = useState({
         initialDeposit: 0,
@@ -32,15 +37,35 @@ function App() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(requestBody),
         }).then(async (res) => {
-            let data = await res.json()
-            requestBody.monthlyDeposit > 0 && requestBody.ratePercentage > 0 && setFutureInvestmentValue(data)
+            let projections = await res.json()
+            // await isRequestBodyValid && setFutureInvestmentValue(projections[projections.length-1].balance)
+
+            requestBody.monthlyDeposit > 0 && requestBody.ratePercentage > 0 && setFutureInvestmentValue(projections[projections.length-1].balance)
+           
+            const xData = projections.map((projection:any) => {
+                return projection.year
+            })
+
+            const yData = projections.map((projection:any) => {
+                return projection.balance
+            })
+
+
+            setChartData({ xAxis: xData, yAxis: yData })
         }).catch ((error => console.log(error)))
     }, [requestBody])
 
-    const handleChange = (name: string, value: number) => {
+    const handleChange = async (name: string, value: number) => {
+
         setRequestBody({...requestBody,
-            [name]: value 
-    })}
+                [name]: value 
+        })
+    
+        //Todo: add useEffect
+        const isRequestBodyValid = await requestBodySchema.isValid(requestBody)
+    
+       console.log(isRequestBodyValid)
+    }
 
     return (
         <ChakraProvider theme={defaultTheme}>
@@ -51,13 +76,14 @@ function App() {
                 <Container pt={6}>
                     <LineChart
                         title="Savings Over Time"
-                        xAxisData={tempData.xAxis}
-                        yAxisData={tempData.yAxis}
+                        xAxisData={chartData.xAxis}
+                        yAxisData={chartData.yAxis}
                         xLabel="Years"
                         yLabel="Amount"
                     />
                 </Container>
                 <Flex>
+                    {/* {Todo: convert to form to use with formik and yup} */}
                     <Flex>
                         <Text>Initial Deposit</Text>
                         <NumberInput 
