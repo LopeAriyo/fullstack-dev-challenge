@@ -46,7 +46,6 @@ function App() {
                             onChange={(value => setInitialDeposit(parseInt(value)))}
                             min={0}
                             step={100} 
-                            label="Initial Deposit"
                             name="initialDeposit"
                             size='sm' 
                             maxW={20}
@@ -66,7 +65,6 @@ function App() {
                             onChange={(value => setMonthlyDeposit(parseInt(value)))}
                             min={0}
                             step={100} 
-                            label="Monthly Deposit"
                             name="monthlyDeposit"
                             size='sm' 
                             maxW={20}
@@ -84,7 +82,6 @@ function App() {
                                 defaultValue={0}
                                 value={interestRatePercentage}
                                 onChange={(value => setInterestRatePercentage(parseFloat(value)))}
-                                label="Interest Rate"
                                 name="interestRate"
                                 precision={2} 
                                 min={0}

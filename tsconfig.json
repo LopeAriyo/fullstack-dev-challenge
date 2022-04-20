@@ -30,6 +30,6 @@
       "./**/*.ts",
     ],
     "exclude": [
-      "./client"
+      "./client",  "./**/*.test.ts",
     ]
-   }
+}
