@@ -38,8 +38,7 @@ function App() {
             body: JSON.stringify(requestBody),
         }).then(async (res) => {
             let projections = await res.json()
-            // await isRequestBodyValid && setFutureInvestmentValue(projections[projections.length-1].balance)
-
+            
             requestBody.monthlyDeposit > 0 && requestBody.ratePercentage > 0 && setFutureInvestmentValue(projections[projections.length-1].balance)
            
             const xData = projections.map((projection:any) => {
