@@ -1,7 +1,7 @@
 import { ChartLegendOptions, ChartOptions } from 'chart.js'
 import React from 'react'
-import { Line } from 'react-chartjs-2'
-import theme from '../theme'
+import {  Bar } from 'react-chartjs-2'
+import theme from '../../theme'
 
 type Props = {
     xAxisData: number[] | string[]
@@ -11,7 +11,7 @@ type Props = {
     yLabel?: string
 }
 
-const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
+const ProjectionChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
     const legendOptions: ChartLegendOptions = {
         display: false,
     }
@@ -40,12 +40,12 @@ const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
     }
 
     return (
-        <Line
+        <Bar
             data={{
                 labels: xAxisData,
                 datasets: [
                     {
-                        backgroundColor: theme.colors.blue100,
+                        backgroundColor: theme.colors.text,
                         borderColor: theme.colors.primary,
                         data: yAxisData,
                     },
@@ -57,4 +57,4 @@ const LineChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
     )
 }
 
-export default LineChart
+export default ProjectionChart
