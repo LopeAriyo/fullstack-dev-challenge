@@ -12,7 +12,7 @@ export async function fetchProjections(form: FormikProps<FormValues>) {
         
             if (!res.ok){
                 const error = new Error()
-                error.message = "Bad response"
+                error.message = "Invalid form values"
                 return error;
             }
 

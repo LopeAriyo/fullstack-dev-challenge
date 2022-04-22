@@ -1,4 +1,5 @@
 import * as app from "./server";
+import express from "express";
 import "mocha";
 import chai, { expect } from "chai";
 import chaiHttp from 'chai-http'
@@ -6,7 +7,7 @@ import chaiHttp from 'chai-http'
 chai.use(chaiHttp);
 
 describe("App", () => {
-    describe("POST /api/savings", () => {
+    describe("POST /api/projection", () => {
         it("should return a successful status given the body request is valid", done => {
             const requestBody = {
                 initialDeposit: 500,
@@ -15,10 +16,10 @@ describe("App", () => {
             };
 
           chai.request('http://localhost:3001')
-                .post("/api/savings")
+                .post("/api/projection")
                 // .set('content-type', 'application/json')
                 .send(requestBody)
-                .end((err: any, res: any) => {
+                .end((err:any , res: any) => {
                         expect(res).to.have.status(200)
                         done()
                     })
