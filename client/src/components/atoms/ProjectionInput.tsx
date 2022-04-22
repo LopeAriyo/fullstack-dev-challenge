@@ -1,7 +1,7 @@
 import React from 'react'
 import { NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react'
 import { FormikProps } from 'formik'
-import { FormValues } from '../../@types/formValue'
+import { FormValues } from '../../types/formValue'
 
 
 interface Props {

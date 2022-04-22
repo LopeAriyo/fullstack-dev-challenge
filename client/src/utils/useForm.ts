@@ -1,5 +1,5 @@
 import { FormikProps, useFormik } from 'formik'
-import { FormValues } from '../@types/formValue';
+import { FormValues } from '../types/formValue';
 import { validationSchema } from './validationSchema';
 
 export function useForm() {

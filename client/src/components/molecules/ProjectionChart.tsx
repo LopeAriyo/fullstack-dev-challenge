@@ -12,6 +12,7 @@ type Props = {
 }
 
 const ProjectionChart = ({ xAxisData, yAxisData, title, xLabel, yLabel }: Props) => {
+    
     const legendOptions: ChartLegendOptions = {
         display: false,
     }

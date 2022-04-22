@@ -1,64 +1,48 @@
-import React, { useEffect } from 'react'
+import React, {  useEffect }  from 'react'
 import {VStack, Text, Divider, Box, Center} from '@chakra-ui/react'
 
 import ProjectionFormControl from '../molecules/ProjectionFormControl';
-import {  useForm } from '../../helpers/formik';
+import { useForm } from '../../utils/useForm';
+import { fetchProjections } from '../../utils/fetchProjections';
+import { formControls } from '../../utils/formControls';
 
-interface ChartData {
-    xAxis: never[]
-    yAxis: never[]
+interface ProjectionData {
+    years: number[] | never []
+    balances: number[] | never[]
 }
-
 interface Props {
-    setChartData: (obj: ChartData) => void
-    setFutureInvestmentValue: (num: number) => void
+    setProjectionData: (obj: ProjectionData) => void
 }
 
-const ProjectionForm = ({setChartData, setFutureInvestmentValue}: Props) => {
+const ProjectionForm = ({ setProjectionData} : Props) => {
 
     const form = useForm()
-    
+
     useEffect(() => {
-        fetch('http://localhost:3001/api/savings', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form.values),
-        }).then(async (res) => {
-            let projections = await res.json()
-            
-            Object.keys(form.errors).length === 0 ? setFutureInvestmentValue(projections[projections.length-1].balance) : setFutureInvestmentValue(0)
-            
-            const xData = projections.map((projection:any) => {
-                return projection.year
-            })
+        
+        const fetchData = async () => {
+            await fetchProjections(form)
+                    .then((projections)=> {
 
-            const yData = projections.map((projection:any) => {
-                return projection.balance
-            })
-            setChartData({ xAxis: xData, yAxis: yData })
-        }).catch ((error => console.log(error)))
+                    const yearData = projections.map((projection: any) => {
+                        return projection.year
+                    })
 
-    }, [form.values, form.errors, form.touched]) 
-    
+                    const balanceData = projections.map((projection:any) => {
+                        return projection.balance
+                    })
 
-    const formControls = [
-        { 
-            name: "initialDeposit" ,
-            label: "Initial Deposit(£)",
-            helperText: "Enter the amount for your first deposit" ,
-            step:100},
-        { 
-            name: "monthlyDeposit" ,
-            label: "Monthly Deposit(£)" ,
-            helperText: "Enter the amount you would like to save monthly" ,
-            step: 100}, 
-        {
-            name:"ratePercentage" ,
-            label: "Interest Rate (%)",
-            helperText:"Enter the rate of your savings", 
-            step: 0.25 
+
+                    if (Object.keys(form.errors).length === 0){
+                        setProjectionData({ years: yearData, balances: balanceData })
+                    }
+                })
+                .catch ((error => console.log(error)))
         }
-    ] 
+
+        fetchData()
+
+    }, [form]) 
 
     return (
         <Center>

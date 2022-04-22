@@ -1,7 +1,7 @@
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react'
 import { FormikProps } from 'formik'
 import React from 'react'
-import { FormValues } from '../../@types/formValue'
+import { FormValues } from '../../types/formValue'
 
 interface Props {
     name: string
