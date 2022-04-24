@@ -37,7 +37,7 @@ describe("App", () => {
                 // .set('content-type', 'application/json')
                 .send(requestBody)
                 .end((err: any, res: any) => {
-                        expect(res).to.have.status(400)
+                        expect(res).to.have.status(404)
                         done()
                     })
                 

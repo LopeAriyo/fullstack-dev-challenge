@@ -1,12 +1,7 @@
 # Finimize Full-Stack Development Challenge
 
-<p align="center">Forked & Attempted by Lopè Ariyo</p>
-
-<p align="center">
-  <a href="https://www.lopeariyo.dev/ ">
-    <img alt="Lope Logo" src="https://pbs.twimg.com/profile_images/1248697046883762176/A80erP3V_400x400.png" width="120" />
-  </a>
-</p>
+This repo is intended to be forked and uploaded to your own Github account in
+order to form the submission for the challenge. Once cloned, it will give you a basic server with a React app, so you don't have to spend time writing boilerplate code. Feel free to make any changes you wish - the existing code is purely intended to get you going faster.
 
 ## Run Instructions
 
@@ -18,7 +13,8 @@ Depending on your environment, you might need to install concurrently / Typescri
 There is one basic test written in the client, which you can run by performing
 `cd client` and then `yarn test`. If you want to add new client tests you can use Jest.
 
-Mocha has been installed on the server to allow you to create server tests if you wish, although none have been written yet.
+Mocha has been installed on the server to allow you to create server tests if you wish,
+although none have been written yet.
 
 ## The challenge
 
@@ -81,20 +77,3 @@ We believe strong TS typing will make your code much more robust.
 We believe Prettier makes your life easier! There is an example .prettierrc included in the `frontend` directory - feel free to tweak the settings if you'd prefer.
 
 You might need to give your IDE a nudge to pick the settings up - [here's an example](https://stackoverflow.com/a/58669550/4388938) of how to do that with VS Code
-
-## The Solution
-
-## Approach
-
-### Features
-
-Fully responsive
-Animated (explored using Framer Motion)
-
-## Changes
-
-### Frontend
-
-### Backend
-
-## Improvements
