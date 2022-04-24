@@ -142,6 +142,18 @@ I hadn't come across Mocha before, I'm familiar with Jest but I didn't find usin
 
 I have structured my code to use the MVC pattern and I've also included a helper folder to include other logic such as validation. The projection has it's own route and calls upon the controller to validate the request made. Provided the request is okay the projectionModel can calculate future savings investment value. The projection is an array of objects each containing a year and balance. The final item in the array gives future savings investment value of 50 years.
 
+-   server
+    -   controllers
+        -   projectionController.ts
+    -   models
+        -   projectionModel.ts
+    -   routes
+        -   projectionRouter.ts
+    -   helpers
+        -   validationSchema.ts
+    -   server.ts
+    -   server.test.ts
+
 #### Testing
 
 The primary tests I created was to ensure the the endpoints would return an appropriate status code given the request contain a valid request body and invalid request body.
